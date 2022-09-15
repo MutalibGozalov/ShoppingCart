@@ -1,0 +1,25 @@
+@page "/"
+@using ShopOnline.Models.Dtos
+@inherits ProductBase  // property ve metodlarini implement etmek ucun object instantiate etmeye ehtiyac qalmir
+
+@if (dtoBaseProducts == null)
+{
+    <DisplaySpinner/> 
+}
+else
+{
+    <h3 class="mb-5">Products</h3>
+    var productCount = dtoBaseProducts.Count();
+
+    @if (productCount>0)
+    {
+        @foreach (var prodGroup in GetGroupedProductsByCategory())
+        {
+            <div class="row mt-3">
+                <h4>@GetCtegoryName(prodGroup)</h4>
+                <DisplayProducts dtoPerRowProducts ="@prodGroup.Take(4)"> </DisplayProducts>     
+            </div>      
+            <hr class ="mb-3"/>         
+        }
+    }
+}
